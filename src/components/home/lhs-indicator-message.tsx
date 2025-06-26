@@ -3,13 +3,15 @@ import { Box, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
+import { useAgentStore } from "@/stores/agent-store";
 
 const MotionBox = motion(Box);
 
 function LeftHandSideIndicatorMessage() {
   const activeService = useServiceStore((state) => state.getActiveService());
+  const selectedChat = useAgentStore((state) => state.getSelectedChat());
 
-  if (!activeService || !activeService.isCreating) return null;
+  if (!activeService || !selectedChat?.isCreating) return null;
 
   return (
     <Box p="10px" w="full">

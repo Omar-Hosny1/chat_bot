@@ -48,7 +48,13 @@ function ServiceTab({
             rounded: "4px",
           }}
         >
-          <Box color={"whiteAlpha.600"} onClick={() => toggleOpened(id)}>
+          <Box
+            color={"whiteAlpha.600"}
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleOpened(id);
+            }}
+          >
             <IoMdClose />
           </Box>
         </Box>

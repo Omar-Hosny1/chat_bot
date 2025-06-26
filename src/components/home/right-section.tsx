@@ -7,6 +7,7 @@ import LeftHandSideIndicatorMessage from "./lhs-indicator-message";
 import { useServiceStore } from "@/stores/service-store";
 import { motion } from "framer-motion";
 import Service from "./service";
+import { useAgentStore } from "@/stores/agent-store";
 
 const MotionFlex = motion(Flex);
 const MotionText = motion(Text);
@@ -15,6 +16,8 @@ function RightSection() {
   const openedServices = useServiceStore((state) => state.services).filter(
     (service) => service.opened
   );
+
+  const selectedService = useServiceStore((state) => state.getActiveService());
 
   return (
     <Flex flexDir="column" h="full">
@@ -35,7 +38,7 @@ function RightSection() {
         </Box>
       </Flex>
 
-      {openedServices.length === 0 ? (
+      {openedServices.length === 0 || !selectedService ? (
         <MotionFlex
           alignItems="center"
           justifyContent="center"
@@ -69,6 +72,7 @@ function RightSection() {
           </MotionText>
         </MotionFlex>
       ) : null}
+      <Service />
     </Flex>
   );
 }

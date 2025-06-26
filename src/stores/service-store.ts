@@ -89,24 +89,40 @@ const defaultServices: IService[] = [
 export const useServiceStore = create<ServiceStore>((set, get) => ({
   services: [...defaultServices],
 
-  toggleOpened: (id) =>
-    set((state) => {
-      const updatedServices = state.services.map((s) =>
-        s.id === id ? { ...s, opened: !s.opened } : s
-      );
-      // Find all opened services after toggle
-      const openedServices = updatedServices.filter((s) => s.opened);
-      let finalServices = updatedServices;
-      // If only one is opened, set it to active and others to inactive
-      if (openedServices.length === 1) {
-        finalServices = updatedServices.map((s) =>
-          s.id === openedServices[0].id
-            ? { ...s, isActive: true }
-            : { ...s, isActive: false }
-        );
+  toggleOpened: (id: string) => {
+  set((state) => {
+    // First, create a new array with all services
+    let services = state.services.map(service => {
+      // For the service being toggled
+      if (service.id === id) {
+        const newOpened = !service.opened;
+        return {
+          ...service,
+          opened: newOpened,
+          // Only set active if opening, not when closing
+          isActive: newOpened 
+        };
       }
-      return { services: finalServices };
-    }),
+      // For all other services
+      return {
+        ...service,
+        // Deactivate if it was active and we're opening a new service
+        isActive: service.opened ? service.isActive : false
+      };
+    });
+
+    // If we just opened a service, make sure it's the only active one
+    const openedService = services.find(s => s.id === id && s.opened);
+    if (openedService) {
+      services = services.map(service => ({
+        ...service,
+        isActive: service.id === id
+      }));
+    }
+
+    return { services };
+  });
+},
 
   setIsActive(id, value) {
     set((state) => ({
@@ -136,5 +152,6 @@ export const useServiceStore = create<ServiceStore>((set, get) => ({
 
   getOpenedServices: () => get().services.filter((s) => s.opened),
 
-  getActiveService: () => get().services.find((service) => service.isActive),
+  getActiveService: () =>
+    get().services.find((service) => service.isActive && service.opened),
 }));
