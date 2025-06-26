@@ -221,7 +221,7 @@ export const useAgentStore = create<AgentStore>((set, get) => ({
     await new Promise<void>((resolve) =>
       setTimeout(() => {
         resolve();
-      }, 1000)
+      }, 3000)
     );
 
     set((state) => ({

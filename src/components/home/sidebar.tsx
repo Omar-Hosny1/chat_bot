@@ -10,6 +10,7 @@ function Sidebar() {
   const agents = useAgentStore((state) => state.agents);
   const selectAgent = useAgentStore((state) => state.selectAgent);
   const services = useServiceStore((state) => state.services);
+  const toDefaults = useServiceStore((state) => state.resetServices);
   const toggleOpened = useServiceStore((state) => state.toggleOpened);
 
   return (
@@ -27,7 +28,15 @@ function Sidebar() {
         flexDir={"column"}
       >
         <Tooltip content={"Home"} positioning={{ placement: "right" }}>
-          <Image src="/icons/home.svg" alt="Home" width={15} height={15} />
+          <Image
+            src="/icons/home.svg"
+            alt="Home"
+            width={15}
+            height={15}
+            onClick={() => {
+              toDefaults();
+            }}
+          />
         </Tooltip>
         <Tooltip content={"Folder"} positioning={{ placement: "right" }}>
           <Image src="/icons/folder.svg" alt="Folder" width={30} height={30} />

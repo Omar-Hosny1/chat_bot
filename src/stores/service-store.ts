@@ -23,6 +23,7 @@ type ServiceStore = {
   getOpenedServices: () => IService[];
   getActiveService: () => IService | undefined;
 };
+
 const defaultServices: IService[] = [
   {
     id: "SV001",
@@ -90,39 +91,33 @@ export const useServiceStore = create<ServiceStore>((set, get) => ({
   services: [...defaultServices],
 
   toggleOpened: (id: string) => {
-  set((state) => {
-    // First, create a new array with all services
-    let services = state.services.map(service => {
-      // For the service being toggled
-      if (service.id === id) {
-        const newOpened = !service.opened;
+    set((state) => {
+      let services = state.services.map((service) => {
+        if (service.id === id) {
+          const newOpened = !service.opened;
+          return {
+            ...service,
+            opened: newOpened,
+            isActive: newOpened,
+          };
+        }
         return {
           ...service,
-          opened: newOpened,
-          // Only set active if opening, not when closing
-          isActive: newOpened 
+          isActive: service.opened ? service.isActive : false,
         };
+      });
+
+      const openedService = services.find((s) => s.id === id && s.opened);
+      if (openedService) {
+        services = services.map((service) => ({
+          ...service,
+          isActive: service.id === id,
+        }));
       }
-      // For all other services
-      return {
-        ...service,
-        // Deactivate if it was active and we're opening a new service
-        isActive: service.opened ? service.isActive : false
-      };
+
+      return { services };
     });
-
-    // If we just opened a service, make sure it's the only active one
-    const openedService = services.find(s => s.id === id && s.opened);
-    if (openedService) {
-      services = services.map(service => ({
-        ...service,
-        isActive: service.id === id
-      }));
-    }
-
-    return { services };
-  });
-},
+  },
 
   setIsActive(id, value) {
     set((state) => ({

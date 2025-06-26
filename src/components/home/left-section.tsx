@@ -1,7 +1,12 @@
-import { Box, Flex, Text, Textarea } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Text,
+  Textarea,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import Image from "next/image";
-import React, { useRef } from "react";
-import Tab from "./agent-tab";
+import React, { useEffect, useRef } from "react";
 import MenuBar from "./menu-bar";
 import ChatTextArea from "./chat-text-area";
 import { useAgentStore } from "@/stores/agent-store";
@@ -9,6 +14,9 @@ import { FaRobot } from "react-icons/fa";
 import ChatMessage from "./message";
 import AgentTab from "./agent-tab";
 import { motion } from "framer-motion";
+import { useServiceStore } from "@/stores/service-store";
+import ServiceTab from "./service-tab";
+import Service from "./service";
 const MotionFlex = motion(Flex);
 const MotionBox = motion(Box);
 const MotionText = motion(Text);
@@ -18,6 +26,23 @@ function LeftSection() {
   const selectedChat = useAgentStore((state) => state.getSelectedChat());
   const addChat = useAgentStore((state) => state.addChat);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const openedServices = useServiceStore((state) => state.services).filter(
+    (service) => service.opened
+  );
+  const selectedService = useServiceStore((state) => state.getActiveService());
+  const isSmallScreen = useBreakpointValue({ base: true, lg: false });
+
+  const scrollToBottom = () => {
+    if (!messagesEndRef) return;
+    messagesEndRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "end",
+    });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [selectedChat]);
 
   if (!selectedAgent) {
     return (
@@ -79,6 +104,11 @@ function LeftSection() {
             key={chat.id}
           />
         ))}
+        {isSmallScreen
+          ? openedServices.map((service) => (
+              <ServiceTab {...service} key={service.id} />
+            ))
+          : null}
         {selectedAgent ? (
           <Box
             onClick={() => addChat(selectedAgent.id)}
@@ -162,7 +192,53 @@ function LeftSection() {
         )}
         <Box padding={"10px"} ref={messagesEndRef} />
       </Flex>
+
       {selectedChat ? <ChatTextArea endListRef={messagesEndRef} /> : null}
+      {isSmallScreen ? (
+        <Flex
+          overflowY={"scroll"}
+          flex={"1"}
+          flexDir={"column"}
+          p={"10px"}
+          border={"1px solid white"}
+        >
+          {openedServices.length === 0 || !selectedService ? (
+            <MotionFlex
+              alignItems="center"
+              justifyContent="center"
+              flex={1}
+              gap="12px"
+              flexDir="column"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+            >
+              <MotionText
+                fontWeight="100"
+                color="white"
+                fontSize="15px"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.4 }}
+              >
+                Your Preview Will Be Shown Here
+              </MotionText>
+
+              <MotionText
+                color="white"
+                fontSize="12px"
+                fontWeight="700"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.4 }}
+              >
+                Start Building
+              </MotionText>
+            </MotionFlex>
+          ) : null}
+          <Service />
+        </Flex>
+      ) : null}
     </Flex>
   );
 }

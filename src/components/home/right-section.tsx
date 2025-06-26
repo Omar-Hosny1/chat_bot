@@ -21,22 +21,24 @@ function RightSection() {
 
   return (
     <Flex flexDir="column" h="full">
-      <Flex bg="#0c0e12" overflowX="auto" whiteSpace="nowrap">
-        {openedServices.map((service) => (
-          <ServiceTab {...service} key={service.id} />
-        ))}
+      {openedServices.length ? (
+        <Flex bg="#0c0e12" overflowX="auto" whiteSpace="nowrap">
+          {openedServices.map((service) => (
+            <ServiceTab {...service} key={service.id} />
+          ))}
 
-        <Box
-          p="5px"
-          transition="300ms"
-          _hover={{
-            bg: "whiteAlpha.300",
-            rounded: "4px",
-          }}
-        >
-          <Image src="/icons/add.svg" width={13} height={13} alt="add" />
-        </Box>
-      </Flex>
+          <Box
+            p="5px"
+            transition="300ms"
+            _hover={{
+              bg: "whiteAlpha.300",
+              rounded: "4px",
+            }}
+          >
+            <Image src="/icons/add.svg" width={13} height={13} alt="add" />
+          </Box>
+        </Flex>
+      ) : null}
 
       {openedServices.length === 0 || !selectedService ? (
         <MotionFlex

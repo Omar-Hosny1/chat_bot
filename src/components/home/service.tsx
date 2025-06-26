@@ -11,7 +11,6 @@ const MotionFlex = motion(Flex);
 const MotionText = motion(Text);
 function Service() {
   const selectedService = useServiceStore((state) => state.getActiveService());
-  console.log({ selectedService });
 
   if (!selectedService) {
     return;

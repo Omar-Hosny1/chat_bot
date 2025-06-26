@@ -43,6 +43,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
 
   return (
     <Flex
+    
       ref={ref}
       alignItems="center"
       justifyContent={isUser ? "end" : "start"}
