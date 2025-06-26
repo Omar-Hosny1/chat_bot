@@ -1,9 +1,17 @@
+"use client";
 import { Box, Flex } from "@chakra-ui/react";
 import Image from "next/image";
 import React from "react";
 import { Tooltip } from "../ui/tooltip";
+import { useAgentStore } from "@/stores/agent-store";
+import { useServiceStore } from "@/stores/service-store";
 
 function Sidebar() {
+  const agents = useAgentStore((state) => state.agents);
+  const selectAgent = useAgentStore((state) => state.selectAgent);
+  const services = useServiceStore((state) => state.services);
+  const toggleOpened = useServiceStore((state) => state.toggleOpened);
+
   return (
     <Flex
       py={"10px"}
@@ -31,48 +39,99 @@ function Sidebar() {
         alignItems={"center"}
         flexDir={"column"}
       >
-        <Tooltip content={"Agent One"} positioning={{ placement: "right" }}>
-          <Image
-            src="/icons/agent-one.svg"
-            alt="Agent One"
-            width={15}
-            height={15}
-          />
-        </Tooltip>
-        <Tooltip content={"Agent Two"} positioning={{ placement: "right" }}>
-          <Image
-            src="/icons/agent-two.svg"
-            alt="Agent Two"
-            width={15}
-            height={15}
-          />
-        </Tooltip>
-        <Box w={"20px"} h={"1px"} bgColor={"whiteAlpha.200"}></Box>
-        <Tooltip content={"Play"} positioning={{ placement: "right" }}>
-          <Image src="/icons/play.svg" alt="Play" width={15} height={15} />
-        </Tooltip>
-        <Tooltip content={"Shell"} positioning={{ placement: "right" }}>
-          <Image src="/icons/shell.svg" alt="Shell" width={15} height={15} />
-        </Tooltip>
-        <Tooltip content={"Monitor"} positioning={{ placement: "right" }}>
-          <Image
-            src="/icons/monitor.svg"
-            alt="Monitor"
-            width={15}
-            height={15}
-          />
-        </Tooltip>
-        <Tooltip content={"Internet"} positioning={{ placement: "right" }}>
-          <Image
-            src="/icons/internet.svg"
-            alt="Internet"
-            width={15}
-            height={15}
-          />
-        </Tooltip>
-        <Tooltip content={"Apps"} positioning={{ placement: "right" }}>
-          <Image src="/icons/apps.svg" alt="Apps" width={15} height={15} />
-        </Tooltip>
+        {agents.map((agent) => (
+          <Tooltip
+            key={agent.id}
+            content={agent.name}
+            positioning={{ placement: "right" }}
+          >
+            <Flex
+              onClick={() => {
+                selectAgent(agent.id);
+              }}
+              alignItems={"center"}
+              gap={"5px"}
+              cursor={"pointer"}
+            >
+              {agent.isSelected ? (
+                <Box
+                  w={"5px"}
+                  h={"5px"}
+                  rounded={"50%"}
+                  bg={"whiteAlpha.500"}
+                  transition="transform 0.2s cubic-bezier(0.4,0,0.2,1), opacity 0.2s"
+                  transform="scale(1.4)"
+                  opacity={1}
+                />
+              ) : (
+                <Box
+                  w={"5px"}
+                  h={"5px"}
+                  rounded={"50%"}
+                  bg={"whiteAlpha.500"}
+                  transition="transform 0.2s cubic-bezier(0.4,0,0.2,1), opacity 0.2s"
+                  transform="scale(0.5)"
+                  opacity={0}
+                  pointerEvents="none"
+                  position="absolute"
+                />
+              )}
+              <Image
+                src={agent.iconSrc}
+                alt={agent.name}
+                width={15}
+                height={15}
+              />
+            </Flex>
+          </Tooltip>
+        ))}
+        <Box w={"20px"} h={"1px"} bgColor={"whiteAlpha.200"} />
+        {services.map((service) => (
+          <Flex
+            key={service.id}
+            gap={"5px"}
+            alignItems={"center"}
+            onClick={() => {
+              toggleOpened(service.id);
+            }}
+          >
+            {service.opened ? (
+              <Box
+                w={"5px"}
+                h={"5px"}
+                rounded={"50%"}
+                bg={"whiteAlpha.500"}
+                transition="transform 0.2s cubic-bezier(0.4,0,0.2,1), opacity 0.2s"
+                transform="scale(1.4)"
+                opacity={1}
+              />
+            ) : (
+              <Box
+                w={"5px"}
+                h={"5px"}
+                rounded={"50%"}
+                bg={"whiteAlpha.500"}
+                transition="transform 0.2s cubic-bezier(0.4,0,0.2,1), opacity 0.2s"
+                transform="scale(0.5)"
+                opacity={0}
+                pointerEvents="none"
+                position="absolute"
+              />
+            )}
+            <Tooltip
+              content={service.name}
+              positioning={{ placement: "right" }}
+              key={service.id}
+            >
+              <Image
+                src={service.iconSrc}
+                alt={service.name}
+                width={15}
+                height={15}
+              />
+            </Tooltip>
+          </Flex>
+        ))}
       </Flex>
       <Box>
         <Tooltip content={"Help"} positioning={{ placement: "right" }}>

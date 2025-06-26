@@ -11,6 +11,7 @@ function Chat() {
     base: false,
     lg: true,
   });
+
   return (
     <Flex w={"full"} h={"full"} bg={"rgb(22 29 41)"}>
       <Allotment>
