@@ -1,10 +1,4 @@
-import {
-  Box,
-  Flex,
-  Text,
-  Textarea,
-  useBreakpointValue,
-} from "@chakra-ui/react";
+import { Box, Flex, Text, useBreakpointValue } from "@chakra-ui/react";
 import Image from "next/image";
 import React, { useEffect, useRef } from "react";
 import MenuBar from "./menu-bar";

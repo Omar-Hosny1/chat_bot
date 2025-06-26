@@ -1,14 +1,7 @@
 "use client";
-import {
-  Box,
-  Flex,
-  Input,
-  InputGroup,
-  Text,
-  useBreakpointValue,
-} from "@chakra-ui/react";
+import { Box, Flex, Input, InputGroup, Text } from "@chakra-ui/react";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 function Header() {
   const [showHeader, setShowHeader] = useState(false);

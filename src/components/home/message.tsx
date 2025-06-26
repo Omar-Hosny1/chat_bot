@@ -1,8 +1,7 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
-import React, { RefAttributes, useState } from "react";
-import TypingText from "./typing-text";
-import { Typewriter, useTypewriter } from "react-simple-typewriter";
+import React from "react";
+import { useTypewriter } from "react-simple-typewriter";
 import { useAgentStore } from "@/stores/agent-store";
 
 interface ChatMessageProps {
@@ -43,7 +42,6 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
 
   return (
     <Flex
-    
       ref={ref}
       alignItems="center"
       justifyContent={isUser ? "end" : "start"}

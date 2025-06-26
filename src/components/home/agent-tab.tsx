@@ -2,7 +2,6 @@ import { useAgentStore } from "@/stores/agent-store";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import React from "react";
-import { FaClosedCaptioning } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 
 interface AgentTabProps {

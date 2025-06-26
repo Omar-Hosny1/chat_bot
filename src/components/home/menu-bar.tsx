@@ -1,5 +1,5 @@
 import { useAgentStore } from "@/stores/agent-store";
-import { Box, Flex, HStack, Text } from "@chakra-ui/react";
+import { Flex, HStack, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import React from "react";
 

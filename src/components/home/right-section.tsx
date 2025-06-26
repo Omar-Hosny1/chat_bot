@@ -1,13 +1,11 @@
 "use client";
-import { Box, Center, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import React from "react";
 import ServiceTab from "./service-tab";
 import Image from "next/image";
-import LeftHandSideIndicatorMessage from "./lhs-indicator-message";
 import { useServiceStore } from "@/stores/service-store";
 import { motion } from "framer-motion";
 import Service from "./service";
-import { useAgentStore } from "@/stores/agent-store";
 
 const MotionFlex = motion(Flex);
 const MotionText = motion(Text);

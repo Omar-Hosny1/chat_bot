@@ -1,22 +1,12 @@
-import { useAgentStore } from "@/stores/agent-store";
 import { IService, useServiceStore } from "@/stores/service-store";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import React from "react";
-import { FaClosedCaptioning } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 
-interface ServiceTabProps extends IService {}
+type ServiceTabProps = IService;
 
-function ServiceTab({
-  id,
-  isCreating,
-  name,
-  opened,
-  indicatorMessage,
-  iconSrc,
-  isActive,
-}: ServiceTabProps) {
+function ServiceTab({ id, name, iconSrc, isActive }: ServiceTabProps) {
   const toggleOpened = useServiceStore((state) => state.toggleOpened);
   const setIsActive = useServiceStore((state) => state.setIsActive);
 
