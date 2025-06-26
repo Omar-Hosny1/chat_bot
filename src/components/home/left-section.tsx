@@ -5,7 +5,7 @@ import Tab from "./tab";
 import MenuBar from "./menu-bar";
 import ChatTextArea from "./chat-text-area";
 import BotMessage from "./bot-message";
-import UserMessage from "./user-message";
+import UserMessage from "./user-messagea";
 
 function LeftSection() {
   return (
@@ -27,7 +27,6 @@ function LeftSection() {
       </Flex>
       <MenuBar />
       <Flex overflowY={"scroll"} flex={"1"} flexDir={"column"} p={"10px"}>
-        <BotMessage />
         <UserMessage />
         <BotMessage />
         <UserMessage />
@@ -35,6 +34,9 @@ function LeftSection() {
         <UserMessage />
         <BotMessage />
         <UserMessage />
+        <BotMessage />
+        <UserMessage />
+        <BotMessage />
       </Flex>
       <ChatTextArea />
     </Flex>

@@ -15,28 +15,33 @@ function ChatTextArea() {
         roundedTopRight={"3px"}
         justifyContent={"space-between"}
       >
-        <Flex gap={"10px"} alignItems={"center"}>
+        <Flex gap={{ base: "5px", lg: "10px" }} alignItems={"center"}>
           <Image
             src={"/icons/agent-one.svg"}
             width={20}
             height={20}
             alt="icon"
           />
-          <Text color={"white"} fontSize={"15px"}>
+          <Text color={"white"} fontSize={{ base: "11px", lg: "unset" }}>
             The AI agent is devising a plan....
           </Text>
         </Flex>
         <Flex gap={"10px"} alignItems={"center"}>
           <Image src={"/icons/resume.svg"} width={13} height={13} alt="icon" />
-          <Text pos={"relative"} top={"2px"} color={"#9E94C6"} fontSize={"12px"}>
+          <Text
+            pos={"relative"}
+            top={"2px"}
+            color={"#9E94C6"}
+            fontSize={"12px"}
+          >
             Pause
           </Text>
         </Flex>
       </Flex>
 
       <Box
-        w="full"
-        bg="rgb(44 50 67)"
+        w={{ base: "full", lg: "full" }}
+        // bg="rgb(44 50 67)"
         px={3}
         py={2}
         borderRadius="md"

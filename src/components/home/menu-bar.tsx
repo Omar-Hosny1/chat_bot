@@ -7,6 +7,7 @@ function MenuBar() {
     <Flex
       height={"20px"}
       mt={"10px"}
+      mx={"10px"}
       justifyContent={"space-between"}
       alignItems={"center"}
     >
